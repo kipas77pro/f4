@@ -4,7 +4,7 @@ sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 IP_FILE="/usr/bin/.ipvps"
 MYIP=$(curl -sS ipv4.icanhazip.com)
-REPO="https://raw.githubusercontent.com/kipas77pro/f4/main/"
+#REPO="https://raw.githubusercontent.com/kipas77pro/f4/main/"
 #IPVPS=$(curl -sS https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini | grep $MYIP | awk '{print $4}')
 #eval $(wget -qO- "satria293.dekaa.my.id")
 clear
@@ -45,7 +45,7 @@ echo " "
 until [[ $name =~ ^[a-zA-Z0-9_.-]+$ ]]; do
 read -rp "Masukan Nama Kamu Disini tanpa spasi : " -e name
 done
-echo "ARYA BLITAR" > /etc/xray/username
+echo "ARYA-BLITAR" > /etc/xray/username
 echo ""
 clear
 }
@@ -128,7 +128,7 @@ fun_bar() {
     tput cnorm
 }
 res1() {
-wget ${REPO}install/pointing.sh && chmod +x pointing.sh && ./pointing.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/pointing.sh && chmod +x pointing.sh && ./pointing.sh
 clear
 }
 clear
@@ -225,37 +225,37 @@ fun_bar() {
 
 
 res2() {
-wget ${REPO}install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
 clear
 } 
 
 res3() {
-wget ${REPO}install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 clear
 }
 
 res4() {
-wget ${REPO}sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
 clear
 }
 
 res5() {
-wget ${REPO}install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 clear
 }
 
 res7() {
-wget ${REPO}menu/update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/menu/update.sh && chmod +x update.sh && ./update.sh
 clear
 }
 
 res8() {
-wget ${REPO}slowdns/installsl.sh && chmod +x installsl.sh && ./installsl.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/slowdns/installsl.sh && chmod +x installsl.sh && ./installsl.sh
 clear
 }
 
 res9() {
-wget ${REPO}install/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
 clear
 }
 if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
