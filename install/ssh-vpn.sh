@@ -1,15 +1,8 @@
 #!/bin/bash
 # initializing var
 MYIP=$(cat /usr/bin/.ipvps)
-REPO="https://raw.githubusercontent.com/kipas77pro/f4/main/"
-    # Hapus semua file di /root dan keluar
-    rm -rf /root/*
-    exit 1
-fi
+
 export DEBIAN_FRONTEND=noninteractive
-MYIP=$(cat /usr/bin/.ipvps)
-#IZIN_FILE="/root/izin/ip"
-#eval $(wget -qO- "satria293.dekaa.my.id")
 MYIP2="s/xxxxxxxxx/$MYIP/g"
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}')
 if [[ -f /etc/os-release ]]; then
@@ -37,7 +30,7 @@ commonname=none
 email=none
 
 # simple password minimal
-curl -sS ${REPO}install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
+curl -sS https://raw.githubusercontent.com/kipas77pro/f4/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -82,17 +75,17 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-curl ${REPO}install/nginx.conf > /etc/nginx/nginx.conf
-curl ${REPO}install/vps.conf > /etc/nginx/conf.d/vps.conf
-wget -O /etc/haproxy/haproxy.cfg "${REPO}/install/haproxy.cfg"
-wget -O /etc/nginx/conf.d/xray.conf "${REPO}install/xray.conf"
+curl https://raw.githubusercontent.com/kipas77pro/f4/main/install/nginx.conf > /etc/nginx/nginx.conf
+curl https://raw.githubusercontent.com/kipas77pro/f4/main/install/vps.conf > /etc/nginx/conf.d/vps.conf
+wget -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/kipas77pro/f4/main/install/haproxy.cfg"
+wget -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/kipas77pro/f4/main/install/xray.conf"
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "${REPO}install/index.html1"
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/kipas77pro/f4/main/install/index.html1"
 
 STOPWEBSERVER=$(lsof -i:80 | awk 'NR==2 {print $1}')
 [[ -n "$STOPWEBSERVER" ]] && systemctl stop "$STOPWEBSERVER"
@@ -124,9 +117,9 @@ cat /etc/xray/xray.key /etc/xray/xray.crt | tee /etc/haproxy/hap.pem
 cd
 wget -O /usr/sbin/badvpn "${REPO}install/badvpn" >/dev/null 2>&1
 chmod +x /usr/sbin/badvpn > /dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn1.service "${REPO}install/badvpn1.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn2.service "${REPO}install/badvpn2.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn3.service "${REPO}install/badvpn3.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn1.service "https://raw.githubusercontent.com/kipas77pro/f4/main/install/badvpn1.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn2.service "https://raw.githubusercontent.com/kipas77pro/f4/main/install/badvpn2.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn3.service "https://raw.githubusercontent.com/kipas77pro/f4/main/install/badvpn3.service" >/dev/null 2>&1
 systemctl disable badvpn1 badvpn2 badvpn3
 systemctl stop badvpn1 badvpn2 badvpn3
 systemctl enable badvpn1 badvpn2 badvpn3
@@ -146,12 +139,12 @@ echo "=== Install Dropbear ==="
 apt -y install dropbear
 sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
 sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
-wget -O /etc/default/dropbear "${REPO}install/dropbear"
+wget -O /etc/default/dropbear "https://raw.githubusercontent.com/kipas77pro/f4/main/install/dropbear"
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
-wget -q ${REPO}install/setrsyslog.sh && chmod +x setrsyslog.sh && ./setrsyslog.sh
+wget -q https://raw.githubusercontent.com/kipas77pro/f4/main/install/setrsyslog.sh && chmod +x setrsyslog.sh && ./setrsyslog.sh
 
 if [[ "$OS_NAME" == "debian" && "$OS_VERSION" == "10" ]] || [[ "$OS_NAME" == "ubuntu" && "$OS_VERSION" == "20.04" ]]; then
     echo "Menginstal squid3 untuk Debian 10 atau Ubuntu 20.04..."
@@ -187,8 +180,8 @@ rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
 cd
-wget ${REPO}install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
-wget ${REPO}install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
 cd
 dd if=/dev/zero of=/swapfile bs=2048 count=1048576
 mkswap /swapfile
