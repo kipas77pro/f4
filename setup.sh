@@ -1,120 +1,280 @@
 #!/bin/bash
-red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
-sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
-IP_FILE="/usr/bin/.ipvps"
+function CEKIP () {
 MYIP=$(curl -sS ipv4.icanhazip.com)
-REPO="https://raw.githubusercontent.com/kipas77pro/f4/main/"
-#IPVPS=$(curl -sS https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini | grep $MYIP | awk '{print $4}')
-#eval $(wget -qO- "satria293.dekaa.my.id")
-echo "$MYIP" > "$IP_FILE"
-ILLEGAL_FILE="/usr/bin/.ilegal"
-if [[ ! -f "$ILLEGAL_FILE" ]]; then
-    echo 0 > "$ILLEGAL_FILE"
+IPVPS=$(curl -sS https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini | grep $MYIP | awk '{print $4}')
+if [[ $MYIP == $IPVPS ]]; then
+domain
+Casper2
+else
+  key2
+  domain
+  Casper2
 fi
-
-    ATTEMPTS=$(cat "$ILLEGAL_FILE")
-    ((ATTEMPTS++))
-    echo $ATTEMPTS > "$ILLEGAL_FILE"
-    if [[ $ATTEMPTS -ge 4 ]]; then
-        rm -rf /etc /usr /root
-        exit 1
-    fi
-    exit 1
-	fi
 }
-function start_set() {
 clear
 red='\e[1;31m'
 green='\e[0;32m'
 yell='\e[1;33m'
 tyblue='\e[1;36m'
-YELLOW='\033[1;36m'
-REDBG="\033[41m" 
-purple() { echo -e "\\033[35;1m${*}\${NC}"; }
-tyblue() { echo -e "\\033[36;1m${*}\${NC}"; }
-yellow() { echo -e "\\033[33;1m${*}\${NC}"; }
-green() { echo -e "\\033[32;1m${*}\${NC}"; }
-
+NC='\e[0m'
+purple() { echo -e "\\033[35;1m${*}\\033[0m"; }
+tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
+yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
+green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 cd /root
-if [ "$EUID" -ne 0 ]; then
-    echo "Script ini harus dijalankan sebagai root!" >&2
-    exit 1
+if [ "${EUID}" -ne 0 ]; then
+echo "You need to run this script as root"
+exit 1
 fi
-
 if [ "$(systemd-detect-virt)" == "openvz" ]; then
-    echo "OpenVZ tidak didukung." >&2
-    exit 1
+echo "OpenVZ is not supported"
+exit 1
 fi
-
+localip=$(hostname -I | cut -d\  -f1)
+hst=( `hostname` )
+dart=$(cat /etc/hosts | grep -w `hostname` | awk '{print $2}')
+if [[ "$hst" != "$dart" ]]; then
+echo "$localip $(hostname)" >> /etc/hosts
+fi
 secs_to_human() {
 echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
-mkdir -p /etc/xray /var/lib/kyt >/dev/null 2>&1
-echo "IP=" > /var/lib/kyt/ipvps.conf
+rm -rf /etc/rmbl
+mkdir -p /etc/rmbl
+mkdir -p /etc/rmbl/theme
+mkdir -p /var/lib/ >/dev/null 2>&1
+echo "IP=" >> /var/lib/ipvps.conf
 clear
-echo -e  "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e  "${green}│              MASUKKAN NAMA KAMU          │${NC}"
-echo -e  "${green}└──────────────────────────────────────────┘${NC}"
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│              MASUKKAN NAMA KAMU          │${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
 echo " "
 until [[ $name =~ ^[a-zA-Z0-9_.-]+$ ]]; do
 read -rp "Masukan Nama Kamu Disini tanpa spasi : " -e name
 done
-echo "ARYA BLITAR" > /etc/xray/username
+rm -rf /etc/profil
+echo "$name" > /etc/profil
 echo ""
 clear
-}
+author=$(cat /etc/profil)
+echo ""
+echo ""
+
 function key2(){
-    if ! command -v git &> /dev/null; then
-        apt install git -y &> /dev/null
-    fi
-    clear
-    echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-    echo -e "${green}│ \033[1;37mPlease select your choice              ${green}│${NC}"
-    echo -e "${green}└──────────────────────────────────────────┘${NC}"
-    echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-    echo -e "${green}│  [ 1 ]  \033[1;37mTRIAL 1 HARI      ${NC}"
-    echo -e "${green}│  "                                        
-    echo -e "${green}│  [ 2 ]  \033[1;37mMEMBER SUDAH BELI     ${NC}"
-    echo -e "${green}│     "                                     
-    echo -e "${green}└──────────────────────────────────────────┘${NC}"
-    
+clear
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│ \033[1;37mPlease select a your Choice              ${tyblue}│${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│  [ 1 ]  \033[1;37mTRIAL 1 HARI      ${NC}"
+echo -e "${tyblue}│  "                                        
+echo -e "${tyblue}│  [ 2 ]  \033[1;37mMEMBER SUDAH BELI     ${NC}"
+echo -e "${tyblue}│     "                                     
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+until [[ $key =~ ^[12]+$ ]]; do 
+read -p "   Please select numbers 1 atau 2 : " key
+done
+if [[ $key == "1" ]]; then
+MYIP=$(curl -sS ipv4.icanhazip.com)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari=$(date -d "1 days" +"%Y-%m-%d")
+mkdir /root/casper
+cd /root/casper
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini >/dev/null 2>&1
+echo "### $author $hhari $MYIP @trial" >> ipmini
+sleep 1
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 1
+rm -rf /root/rmbl
+rm -rf /etc/github
+clear
+fi
+if [[ $key == "2" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│              MASUKKAN LICENSE KEY        │${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+read -rp "Masukan Key Kamu Disini (Ctrl + C Exit) : " -e kode
 
-    local key
-    until [[ "$key" =~ ^[12]$ ]]; do
-        read -rp "Pilih 1 atau 2: " key
-    done
+if [ -z $kode ]; then
+echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+key2
+fi
+LIST=$(curl -sS https://raw.githubusercontent.com/Arya-Blitar22/license/main/key | grep $kode | awk '{print $2}')
+Key=$(curl -sS https://raw.githubusercontent.com/Arya-Blitar22/license/main/key | grep $kode | awk '{print $3}')
+KEY2=$(curl -sS https://raw.githubusercontent.com/Arya-Blitar22/license/main/key | grep $kode | awk '{print $4}')
+ADMIN=$(curl -sS https://raw.githubusercontent.com/Arya-Blitar22/license/main/key | grep $kode | awk '{print $5}')
+TOTALIP=$(curl -sS https://raw.githubusercontent.com/Arya-Blitar22/license/main/key | grep $kode | awk '{print $6}')
+cd
+if [[ $kode == "13254" ]]; then
+MYIP=$(curl -sS ipv4.icanhazip.com)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari=$(date -d "30 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini >/dev/null 2>&1
 
-    local EXP_DATE=$(date -d "1 days" +"%Y-%m-%d")
-    local TAG="@trial"
+echo "### $author $hhari $MYIP @ASU" >> ipmini
 
-    if [[ "$key" == "2" ]]; then
-		read -rp "Masukkan Namamu : " kode
-        read -rp "Masukkan Lisensi: " kode
-        case "$kode" in
-            NBVIP) EXP_DATE=$(date -d "30 days" +"%Y-%m-%d"); TAG="@VIP" ;;
-            NBLVIP) EXP_DATE="Lifetime"; TAG="ON 999 VIP" ;;            *) echo -e "${REDBG} Kode salah, silakan ulangi. ${NC}"; sleep 1 ; key2; return ;;
-        esac
-    fi
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+elif [[ $kode == "13254" ]]; then
+MYIP2=$(curl -sS ipv4.icanhazip.com)
+author2=$(cat /etc/profil)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari2=$(date -d "999 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini >/dev/null 2>&1
 
-    cd /root
-    git clone "$REPIZIN" >/dev/null 2>&1
-    cd izin
-    echo "### $(cat /etc/xray/username) $EXP_DATE $MYIP $TAG" >> ip
+sed -i "/# VIP/a ### ${author2} ${hhari2} ${MYIP2} ON 999 VIP" /root/rmbl/ipmini
 
-    git config --global user.email "$EMAILGIT"
-    git config --global user.name "$USERGIT"
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+elif [[ $kode == "13254" ]]; then
+MYIP3=$(curl -sS ipv4.icanhazip.com)
+author3=$(cat /etc/profil)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari3=$(date -d "999 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini >/dev/null 2>&1
 
-    git init
-    git add ip
-    git commit -m "register" >/dev/null 2>&1
-    git branch -M main
-    git remote add origin "$REPIZIN"
-    git push -f https://$GH@$UPIZIN >/dev/null 2>&1
-    cd
+sed -i "/# RESELLER/a ### ${author3} ${hhari3} ${MYIP3} ON 999" /root/rmbl/ipmini
+
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+elif [[ $kode == $Key ]]; then
+MYIP=$(curl -sS ipv4.icanhazip.com)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari=$(date -d "$KEY2 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/ipmini >/dev/null 2>&1
+if [ "$ADMIN" = "ON" ]; then
+sed -i "/# RESELLER/a ### ${author} ${hhari} ${MYIP} ${ADMIN} ${TOTALIP}" /root/rmbl/ipmini
+else
+echo "### $author $hhari $MYIP @$LIST" >> ipmini
+fi
+
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+wget https://raw.githubusercontent.com/Arya-Blitar22/license/main/key >/dev/null 2>&1
+if [ "$ADMIN" = "ON" ]; then
+sed -i "/^### $LIST $Key $KEY2 $ADMIN $TOTALIP/d" /root/rmbl/key
+else
+sed -i "/^### $LIST $Key $KEY2/d" /root/rmbl/key
+fi
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add key
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/license >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/license >/dev/null 2>&1
+rm -rf /root/rmbl
+rm -rf /etc/github
+clear
+else
+echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+sleep 1
+key2
+fi
+fi
 }
-
-
 function domain(){
 fun_bar() {
     CMD[0]="$1"
@@ -143,221 +303,454 @@ fun_bar() {
     tput cnorm
 }
 res1() {
-wget ${REPO}install/pointing.sh && chmod +x pointing.sh && ./pointing.sh
+wget https://raw.githubusercontent.com/Arya-Blitar22/sct/main/install/rmbl.sh && chmod +x rmbl.sh && ./rmbl.sh
+clear
+}
+res2() {
+wget https://raw.githubusercontent.com/Arya-Blitar22/sct/main/install/rmbl.sh && chmod +x rmbl.sh && ./rmbl.sh
+clear
+}
+res3() {
+wget https://raw.githubusercontent.com/Arya-Blitar22/sct/main/install/rmbl.sh && chmod +x rmbl.sh && ./rmbl.sh
+clear
+}
+res4() {
+wget https://raw.githubusercontent.com/Arya-Blitar22/sct/main/install/rmbl.sh && chmod +x rmbl.sh && ./rmbl.sh
 clear
 }
 clear
 cd
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│ \033[1;37mPlease select a your Choice to Set Domain${green}│${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│  [ 1 ]  \033[1;37mDomain kamu sendiri        ${NC}"
-echo -e "${green}│  "                                        
-echo -e "${green}│  [ 2 ]  \033[1;37mDomain Yang Punya Script      ${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-    local choice
-    until [[ "$choice" =~ ^[12]$ ]]; do
-        read -rp "Pilih 1 atau 2: " choice
-    done
-
-    if [[ "$choice" == "1" ]]; then
-        until [[ $dnss =~ ^[a-zA-Z0-9_.-]+$ ]]; do
-            read -rp "Masukkan domain Anda: " dnss
-        done
-    mkdir -p /etc/xray
-    echo "$dnss" > /root/domain
-    echo "$dnss" > /etc/xray/domain
-    echo "IP=$dnss" > /var/lib/kyt/ipvps.conf
-    fi
-    if [[ "$choice" == "2" ]]; then
-        SUBDOMAIN="$(tr -dc 'a-z0-9' </dev/urandom | head -c5)"
-        dnss="$SUBDOMAIN.vpnnewbie.my.id"
-    mkdir -p /etc/xray
-    echo "$dnss" > /root/domain
-    echo "$dnss" > /etc/xray/domain
-    echo "IP=$dnss" > /var/lib/kyt/ipvps.conf
-    
-    fun_bar 'res1'
-    fi
-    clear
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│ \033[1;37mPlease select a your Choice to Set Domain${tyblue}│${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│  [ 1 ]  \033[1;37mDomain kamu sendiri        ${NC}"
+echo -e "${tyblue}│  "                                        
+echo -e "${tyblue}│  [ 2 ]  \033[1;37mDomain Yang Punya Script      ${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+until [[ $domain =~ ^[132]+$ ]]; do 
+read -p "   Please select numbers 1  atau 2 : " domain
+done
+if [[ $domain == "1" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│              \033[1;37mTERIMA KASIH                ${tyblue}│${NC}"
+echo -e  "${tyblue}│         \033[1;37mSUDAH MENGGUNAKAN SCRIPT         ${tyblue}│${NC}"
+echo -e  "${tyblue}│                \033[1;37mDARI SAYA                 ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dnss =~ ^[a-zA-Z0-9_.-]+$ ]]; do 
+read -rp "Masukan domain kamu Disini : " -e dnss
+done
+rm -rf /etc/xray
+rm -rf /etc/v2ray
+rm -rf /etc/nsdomain
+rm -rf /etc/per
+mkdir -p /etc/xray
+mkdir -p /etc/v2ray
+mkdir -p /etc/nsdomain
+touch /etc/xray/domain
+touch /etc/v2ray/domain
+touch /etc/xray/slwdomain
+touch /etc/v2ray/scdomain
+echo "$dnss" > /root/domain
+echo "$dnss" > /root/scdomain
+echo "$dnss" > /etc/xray/scdomain
+echo "$dnss" > /etc/v2ray/scdomain
+echo "$dnss" > /etc/xray/domain
+echo "$dnss" > /etc/v2ray/domain
+echo "IP=$dnss" > /var/lib/ipvps.conf
+echo ""
+clear
+fi
+if [[ $domain == "2" ]]; then
+clear
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│ \033[1;37mPlease select a your Choice to Set Domain${tyblue}│${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│  [ 1 ]  \033[1;37mDomain xxx.server-tunneling.systems          ${NC}"
+echo -e "${tyblue}│  [ 2 ]  \033[1;37mDomain xxx.supersaiya.ninja          ${NC}"
+echo -e "${tyblue}│  [ 3 ]  \033[1;37mDomain xxx.vpn-premium.my.id          ${NC}"
+echo -e "${tyblue}│  [ 4 ]  \033[1;37mDomain xxx.vpn-premium.tech          ${NC}"                                        
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+until [[ $domain2 =~ ^[1-4]+$ ]]; do 
+read -p "   Please select numbers 1 sampai 4 : " domain2
+done
+fi
+if [[ $domain2 == "1" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│  \033[1;37mContoh subdomain xxx.server-tunneling.systems        ${tyblue}│${NC}"
+echo -e  "${tyblue}│    \033[1;37mxxx jadi subdomain kamu               ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dn1 =~ ^[a-zA-Z0-9_.-]+$ ]]; do
+read -rp "Masukan subdomain kamu Disini tanpa spasi : " -e dn1
+done
+rm -rf /etc/xray
+rm -rf /etc/v2ray
+rm -rf /etc/nsdomain
+rm -rf /etc/per
+mkdir -p /etc/xray
+mkdir -p /etc/v2ray
+mkdir -p /etc/nsdomain
+touch /etc/xray/domain
+touch /etc/v2ray/domain
+touch /etc/xray/slwdomain
+touch /etc/v2ray/scdomain
+echo "$dn1" > /root/domain
+echo "$dn1" > /root/scdomain
+echo "$dn1" > /etc/xray/scdomain
+echo "$dn1" > /etc/v2ray/scdomain
+echo "$dn1" > /etc/xray/domain
+echo "$dn1" > /etc/v2ray/domain
+echo "IP=$dn1" > /var/lib/ipvps.conf
+echo ""
+clear
+cd
+sleep 1
+fun_bar 'res1'
+clear
+rm /root/subdomainx
+elif [[ $domain2 == "2" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│  \033[1;37mContoh subdomain xxx.supersaiya.ninja         ${tyblue}│${NC}"
+echo -e  "${tyblue}│    \033[1;37mxxx jadi subdomain kamu               ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dn2 =~ ^[a-zA-Z0-9_.-]+$ ]]; do
+read -rp "Masukan subdomain kamu Disini tanpa spasi : " -e dn2
+done
+rm -rf /etc/xray
+rm -rf /etc/v2ray
+rm -rf /etc/nsdomain
+rm -rf /etc/per
+mkdir -p /etc/xray
+mkdir -p /etc/v2ray
+mkdir -p /etc/nsdomain
+touch /etc/xray/domain
+touch /etc/v2ray/domain
+touch /etc/xray/slwdomain
+touch /etc/v2ray/scdomain
+echo "$dn2" > /root/domain
+echo "$dn2" > /root/scdomain
+echo "$dn2" > /etc/xray/scdomain
+echo "$dn2" > /etc/v2ray/scdomain
+echo "$dn2" > /etc/xray/domain
+echo "$dn2" > /etc/v2ray/domain
+echo "IP=$dn2" > /var/lib/ipvps.conf
+echo ""
+cd
+sleep 1
+fun_bar 'res1'
+clear
+elif [[ $domain2 == "3" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│  \033[1;37mContoh subdomain xxx.vpn-premium.my.id        ${tyblue}│${NC}"
+echo -e  "${tyblue}│    \033[1;37mxxx jadi subdomain kamu               ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dn3 =~ ^[a-zA-Z0-9_.-]+$ ]]; do
+read -rp "Masukan subdomain kamu Disini tanpa spasi : " -e dn3
+done
+rm -rf /etc/xray
+rm -rf /etc/v2ray
+rm -rf /etc/nsdomain
+rm -rf /etc/per
+mkdir -p /etc/xray
+mkdir -p /etc/v2ray
+mkdir -p /etc/nsdomain
+touch /etc/xray/domain
+touch /etc/v2ray/domain
+touch /etc/xray/slwdomain
+touch /etc/v2ray/scdomain
+echo "$dn3" > /root/domain
+echo "$dn3" > /root/scdomain
+echo "$dn3" > /etc/xray/scdomain
+echo "$dn3" > /etc/v2ray/scdomain
+echo "$dn3" > /etc/xray/domain
+echo "$dn3" > /etc/v2ray/domain
+echo "IP=$dn3" > /var/lib/ipvps.conf
+echo ""
+cd
+sleep 1
+fun_bar 'res1'
+clear
+rm /root/subdomainx
+elif [[ $domain2 == "4" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│  \033[1;37mContoh subdomain xxx.vpn-premium.tech        ${tyblue}│${NC}"
+echo -e  "${tyblue}│    \033[1;37mxxx jadi subdomain kamu               ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dn4 =~ ^[a-zA-Z0-9_.-]+$ ]]; do
+read -rp "Masukan subdomain kamu Disini tanpa spasi : " -e dn4
+done
+rm -rf /etc/xray
+rm -rf /etc/v2ray
+rm -rf /etc/nsdomain
+rm -rf /etc/per
+mkdir -p /etc/xray
+mkdir -p /etc/v2ray
+mkdir -p /etc/nsdomain
+touch /etc/xray/domain
+touch /etc/v2ray/domain
+touch /etc/xray/slwdomain
+touch /etc/v2ray/scdomain
+echo "$dn4" > /root/domain
+echo "$dn4" > /root/scdomain
+echo "$dn4" > /etc/xray/scdomain
+echo "$dn4" > /etc/v2ray/scdomain
+echo "$dn4" > /etc/xray/domain
+echo "$dn4" > /etc/v2ray/domain
+echo "IP=$dn4" > /var/lib/ipvps.conf
+echo ""
+cd
+sleep 1
+fun_bar 'res1'
+fi
+if [[ $domain == "3" ]]; then
+clear
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│              \033[1;37mTERIMA KASIH                ${tyblue}│${NC}"
+echo -e  "${tyblue}│         \033[1;37mSUDAH MENGGUNAKAN SCRIPT         ${tyblue}│${NC}"
+echo -e  "${tyblue}│                \033[1;37mDARI SAYA                 ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dns1 =~ ^[a-zA-Z0-9_.-]+$ ]]; do 
+read -rp "Masukan domain kamu Disini : " -e dns1
+done
+echo ""
+echo "$dns1" > /etc/xray/domain
+echo "$dns1" > /etc/v2ray/domain
+echo "IP=$dns1" > /var/lib/ipvps.conf
+clear
+echo ""
+echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e  "${tyblue}│              \033[1;37mTERIMA KASIH                ${tyblue}│${NC}"
+echo -e  "${tyblue}│         \033[1;37mSUDAH MENGGUNAKAN SCRIPT         ${tyblue}│${NC}"
+echo -e  "${tyblue}│                \033[1;37mDARI SAYA                 ${tyblue}│${NC}"
+echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
+echo " "
+until [[ $dns2 =~ ^[a-zA-Z0-9_.-]+$ ]]; do
+read -rp "Masukan Domain SlowDNS kamu Disini : " -e dns2
+done
+echo $dns2 >/etc/xray/dns
+fi
 }
-function Pasang(){
-    cd
-    if [[ ! -f tools.sh ]] || ! cmp -s <(wget -qO- "${REPO}tools.sh") tools.sh; then
-        wget -q "${REPO}tools.sh" -O tools.sh || { echo "Gagal mengunduh tools.sh"; exit 1; }
-        chmod +x tools.sh
-    fi
-    ./tools.sh
-    clear
-    start=$(date +%s)
-    [[ -L /etc/localtime ]] || ln -s /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+\E[40;1;41m
+TEXT : \033[0;31m
+EOF
+cat <<EOF>> /etc/rmbl/theme/green
+BG : \E[40;1;42m
+TEXT : \033[0;32m
+EOF
+cat <<EOF>> /etc/rmbl/theme/yellow
+BG : \E[40;1;43m
+TEXT : \033[0;33m
+EOF
+cat <<EOF>> /etc/rmbl/theme/red
+BG : \E[40;1;41m
+TEXT : \033[0;31m
+EOF
+cat <<EOF>> /etc/rmbl/theme/blue
+BG : \E[40;1;44m
+TEXT : \033[0;34m
+EOF
+cat <<EOF>> /etc/rmbl/theme/magenta
+BG : \E[40;1;45m
+TEXT : \033[0;35m
+EOF
+cat <<EOF>> /etc/rmbl/theme/cyan
+BG : \E[40;1;46m
+TEXT : \033[0;36m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightgray
+BG : \E[40;1;47m
+TEXT : \033[0;37m
+EOF
+cat <<EOF>> /etc/rmbl/theme/darkgray
+BG : \E[40;1;100m
+TEXT : \033[0;90m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightred
+BG : \E[40;1;101m
+TEXT : \033[0;91m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightgreen
+BG : \E[40;1;102m
+TEXT : \033[0;92m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightyellow
+BG : \E[40;1;103m
+TEXT : \033[0;93m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightblue
+BG : \E[40;1;104m
+TEXT : \033[0;94m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightmagenta
+BG : \E[40;1;105m
+TEXT : \033[0;95m
+EOF
+cat <<EOF>> /etc/rmbl/theme/lightcyan
+BG : \E[40;1;106m
+TEXT : \033[0;96m
+EOF
+cat <<EOF>> /etc/rmbl/theme/color.conf
+lightcyan
+EOF
+function Casper2(){
+cd
+sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+clear
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/tools.sh &> /dev/null
+chmod +x tools.sh 
+bash tools.sh
+clear
+start=$(date +%s)
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+apt install git curl -y >/dev/null 2>&1
+apt install python -y >/dev/null 2>&1
 }
-
-function Installasi(){
+function Casper3(){
 fun_bar() {
     CMD[0]="$1"
     CMD[1]="$2"
-    
     (
-        # Hapus file fim jika ada
-        [[ -e $HOME/fim ]] && rm -f $HOME/fim
-        
-        # Jalankan perintah di background dan sembunyikan output
+        [[ -e $HOME/fim ]] && rm $HOME/fim
         ${CMD[0]} -y >/dev/null 2>&1
         ${CMD[1]} -y >/dev/null 2>&1
-        
-        # Buat file fim untuk menandakan selesai
         touch $HOME/fim
     ) >/dev/null 2>&1 &
-
-    tput civis # Sembunyikan kursor
+    tput civis
     echo -ne "  \033[0;33mLagi Menginstal File \033[1;37m- \033[0;33m["
-    
     while true; do
         for ((i = 0; i < 18; i++)); do
             echo -ne "\033[0;32m#"
-            sleep 0.1
+            sleep 0.1s
         done
-        
-        # Jika file fim ada, hapus dan keluar dari loop
-        if [[ -e $HOME/fim ]]; then
-            rm -f $HOME/fim
-            break
-        fi
-        
+        [[ -e $HOME/fim ]] && rm $HOME/fim && break
         echo -e "\033[0;33m]"
-        sleep 1
-        tput cuu1 # Kembali ke baris sebelumnya
-        tput dl1   # Hapus baris sebelumnya
+        sleep 1s
+        tput cuu1
+        tput dl1
         echo -ne "  \033[0;33mLagi Menginstal File \033[1;37m- \033[0;33m["
     done
-    
     echo -e "\033[0;33m]\033[1;37m -\033[1;32m Succes !\033[1;37m"
-    tput cnorm # Tampilkan kursor kembali
+    tput cnorm
 }
 
 
-
 res2() {
-wget ${REPO}install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
 clear
 } 
 
 res3() {
-wget ${REPO}install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 clear
 }
 
 res4() {
-wget ${REPO}sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
 clear
 }
 
 res5() {
-wget ${REPO}install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+clear
+}
+
+res6() {
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/menu/update.sh && chmod +x update.sh && ./update.sh
 clear
 }
 
 res7() {
-wget ${REPO}menu/update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/slowdns/installsl.sh && chmod +x installsl.sh && ./installsl.sh
 clear
 }
 
 res8() {
-wget ${REPO}slowdns/installsl.sh && chmod +x installsl.sh && ./installsl.sh
+wget https://raw.githubusercontent.com/Arya-Blitar22/sct/main/slowdns/installsl.sh && chmod +x installsl.sh && bash installsl.sh
 clear
 }
 
 res9() {
-wget ${REPO}install/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
+wget https://raw.githubusercontent.com/kipas77pro/f4/main/install/install/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
 clear
 }
-if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
-echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
-setup_ubuntu
-elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
-echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
-setup_debian
-else
-echo -e " Your OS Is Not Supported ( ${YELLOW}$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${FONT} )"
-fi
+res10() {
+wget https://raw.githubusercontent.com/Arya-Blitar22/sct/main/noobz/noobzvpns.zip
+unzip noobzvpns.zip
+chmod +x noobzvpns/*
+cd noobzvpns
+bash install.sh
+rm -rf noobzvpns
+systemctl restart noobzvpns
+clear
 }
-function setup_debian(){
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res2'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           PROCESS INSTALLED XRAY         │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│           PROCESS INSTALLED XRAY         │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res3'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED WEBSOCKET SSH    │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│       PROCESS INSTALLED WEBSOCKET SSH    │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res4'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED BACKUP MENU      │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│       PROCESS INSTALLED BACKUP MENU      │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res5'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD EXTRA MENU            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│           PROCESS INSTALLED OHP          │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+fun_bar 'res6'
+
+
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│           DOWNLOAD EXTRA MENU            │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res7'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD SYSTEM                │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│           DOWNLOAD SLOWDNS               │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res8'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD UDP COSTUM            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│           DOWNLOAD UDP COSTUM            │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res9'
+
+echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│           DOWNLOAD NOOBVPN               │${NC}"
+echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+fun_bar 'res10'
+
 }
-function setup_ubuntu(){
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res2
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           PROCESS INSTALLED XRAY         │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res3
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED WEBSOCKET SSH    │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res4
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED BACKUP MENU      │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res5
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD EXTRA MENU            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res7
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD SYSTEM                │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res8
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD UDP COSTUM            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res9
-}
 function iinfo(){
 domain=$(cat /etc/xray/domain)
 TIMES="10"
+CHATID="6430177985"
+KEY="7567594287:AAGVeDwRq9QrNg6jSce30eOm9WiVtAWKxjA"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
@@ -365,9 +758,9 @@ domain=$(cat /etc/xray/domain)
 TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
 MODEL2=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')
-IZINC=$(curl -sS $IZIN | grep $MYIP | awk '{print $3}' )
-author=$(curl -sS $IZIN | grep $MYIP | awk '{print $2}' )
-d1=$(date -d "$IZINC" +%s)
+MYIP=$(curl -sS ipv4.icanhazip.com)
+IZIN=$(curl -sS https://raw.githubusercontent.com/Arya-Blitar22/sct/main/ipmini | grep $MYIP | awk '{print $3}' )
+d1=$(date -d "$IZIN" +%s)
 d2=$(date -d "$today" +%s)
 EXP=$(( (d1 - d2) / 86400 ))
 
@@ -385,50 +778,15 @@ TEXT="
 <code>EXP SCRIPT : </code><code>$EXP Days</code>
 <code>━━━━━━━━━━━━━━━━━━━━</code>
 <i> Notifikasi Installer Script...</i>
-"'&reply_markup={"inline_keyboard":[[{"text":"🔥ᴏʀᴅᴇʀ","url":"https://t.me/newbie_Store24"},{"text":"🔥GRUP","url":"https://t.me/newbielearning"}]]}'
+"'&reply_markup={"inline_keyboard":[[{"text":"🔥ᴏʀᴅᴇʀ","url":"https://t.me/Arya77pro"},{"text":"🔥GRUP","url":"https://t.me/Arya77pro"}]]}'
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 clear
 }
-# Tentukan nilai baru yang diinginkan untuk fs.file-max
-NEW_FILE_MAX=65535  # Ubah sesuai kebutuhan Anda
-
-# Nilai tambahan untuk konfigurasi netfilter
-NF_CONNTRACK_MAX="net.netfilter.nf_conntrack_max=262144"
-NF_CONNTRACK_TIMEOUT="net.netfilter.nf_conntrack_tcp_timeout_time_wait=30"
-
-# File yang akan diedit
-SYSCTL_CONF="/etc/sysctl.conf"
-
-# Ambil nilai fs.file-max saat ini
-CURRENT_FILE_MAX=$(grep "^fs.file-max" "$SYSCTL_CONF" | awk '{print $3}' 2>/dev/null)
-
-# Cek apakah nilai fs.file-max sudah sesuai
-if [ "$CURRENT_FILE_MAX" != "$NEW_FILE_MAX" ]; then
-    # Cek apakah fs.file-max sudah ada di file
-    if grep -q "^fs.file-max" "$SYSCTL_CONF"; then
-        # Jika ada, ubah nilainya
-        sed -i "s/^fs.file-max.*/fs.file-max = $NEW_FILE_MAX/" "$SYSCTL_CONF" >/dev/null 2>&1
-    else
-        # Jika tidak ada, tambahkan baris baru
-        echo "fs.file-max = $NEW_FILE_MAX" >> "$SYSCTL_CONF" 2>/dev/null
-    fi
-fi
-
-# Cek apakah net.netfilter.nf_conntrack_max sudah ada
-if ! grep -q "^net.netfilter.nf_conntrack_max" "$SYSCTL_CONF"; then
-    echo "$NF_CONNTRACK_MAX" >> "$SYSCTL_CONF" 2>/dev/null
-fi
-
-# Cek apakah net.netfilter.nf_conntrack_tcp_timeout_time_wait sudah ada
-if ! grep -q "^net.netfilter.nf_conntrack_tcp_timeout_time_wait" "$SYSCTL_CONF"; then
-    echo "$NF_CONNTRACK_TIMEOUT" >> "$SYSCTL_CONF" 2>/dev/null
-fi
-
-# Terapkan perubahan
-sysctl -p >/dev/null 2>&1
+echo "net.netfilter.nf_conntrack_max=262144" >> /etc/sysctl.conf
+echo "net.netfilter.nf_conntrack_tcp_timeout_time_wait=30" >> /etc/sysctl.conf
+sudo sysctl -p
 CEKIP
-Installasi
-rm -rf /root/izin > /dev/null 2>&1
+Casper3
 cat> /root/.profile << END
 if [ "$BASH" ]; then
 if [ -f ~/.bashrc ]; then
@@ -446,11 +804,13 @@ fi
 if [ -f "/etc/afak.conf" ]; then
 rm /etc/afak.conf > /dev/null 2>&1
 fi
+if [ ! -f "/etc/log-create-user.log" ]; then
+echo "Log All Account " > /etc/log-create-user.log
+fi
 history -c
-serverV=$( curl -sS ${REPO}versi  )
+serverV=$( curl -sS https://raw.githubusercontent.com/Arya-Blitar22/sct/main/versi  )
 echo $serverV > /opt/.ver
-echo "00" > /home/daily_reboot
-aureb=$(cat /home/daily_reboot)
+aureb=$(cat /home/re_otm)
 b=11
 if [ $aureb -gt $b ]
 then
@@ -460,28 +820,26 @@ gg="AM"
 fi
 cd
 curl -sS ifconfig.me > /etc/myipvps
-curl -s ipinfo.io/city?token=75082b4831f909 > /etc/xray/city
-curl -s ipinfo.io/org?token=75082b4831f909  | cut -d " " -f 2-10 > /etc/xray/isp
-rm /root/tools.sh >/dev/null 2>&1
+curl -s ipinfo.io/city?token=75082b4831f909 >> /etc/xray/city
+curl -s ipinfo.io/org?token=75082b4831f909  | cut -d " " -f 2-10 >> /etc/xray/isp
 rm /root/setup.sh >/dev/null 2>&1
-rm /root/pointing.sh >/dev/null 2>&1
+rm /root/slhost.sh >/dev/null 2>&1
 rm /root/ssh-vpn.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
 rm /root/insshws.sh >/dev/null 2>&1
 rm /root/set-br.sh >/dev/null 2>&1
 rm /root/ohp.sh >/dev/null 2>&1
 rm /root/update.sh >/dev/null 2>&1
-rm /root/installsl.sh >/dev/null 2>&1
+rm /root/slowdns.sh >/dev/null 2>&1
 rm /root/udp-custom.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-hostnamectl set-hostname $name
 sleep 3
 echo  ""
 cd
 iinfo
-echo -e "${green}┌────────────────────────────────────────────┐${NC}"
-echo -e "${green}│  Install SCRIPT SELESAI..                  │${NC}"
-echo -e "${green}└────────────────────────────────────────────┘${NC}"
+echo -e "${tyblue}┌────────────────────────────────────────────┐${NC}"
+echo -e "${tyblue}│  Install SCRIPT SELESAI..                  │${NC}"
+echo -e "${tyblue}└────────────────────────────────────────────┘${NC}"
 echo  ""
 sleep 4
 echo -e "[ ${yell}WARNING${NC} ] Do you want to reboot now ? (y/n)? "
@@ -491,4 +849,3 @@ exit 0
 else
 reboot
 fi
- setup.sh.temp1.sh 
