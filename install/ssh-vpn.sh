@@ -1,6 +1,6 @@
 #!/bin/bash
 # initializing var
-MYIP=$(cat /usr/bin/.ipvps)
+#MYIP=$(cat /usr/bin/.ipvps)
 
 export DEBIAN_FRONTEND=noninteractive
 MYIP2="s/xxxxxxxxx/$MYIP/g"
