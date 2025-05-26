@@ -36,3 +36,7 @@ curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh 
 ````
 apt update -y && apt install -y wget curl && wget -q https://raw.githubusercontent.com/kipas77pro/f4/main/setup.sh && chmod +x setup.sh && ./setup.sh
 ````
+
+````
+wget -O menu-vmess "raw.githubusercontent.com/kipas77pro/f4/main/menu-vmess.sh" && chmod +x menu-vmess
+````
