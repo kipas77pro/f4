@@ -6,7 +6,7 @@ apt install wget -y && rm -f gasss-root.sh && apt install wget whois -y && wget 
 
 ## INSTALL
 ````
-wget -q https://raw.githubusercontent.com/kipas77pro/f4/main/setup.sh && chmod +x setup.sh && ./setup.sh
+apt update -y && apt install -y wget curl screen sudo && wget -q https://raw.githubusercontent.com/kipas77pro/f4/main/setup.sh && chmod +x setup.sh && screen -S install ./setup.sh
 ````
 
 ## update
